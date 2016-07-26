@@ -1,0 +1,17 @@
+{
+  "name": "gx-js",
+  "version": "0.0.1",
+  "description": "",
+  "bin": {
+    "gx-js": "./cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Victor Bjelkholm <victorbjelkholm@gmail.com> (https://www.github.com/victorbjelkholm)",
+  "license": "MIT",
+  "dependencies": {
+    "fs-extra": "0.30.0"
+  }
+}
