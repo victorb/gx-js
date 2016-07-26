@@ -2,20 +2,13 @@
 const path = require('path')
 var fs = require('fs-extra')
 const cmds = {
-  'post-import': () => {
-    console.log(args)
-  },
-  'post-init': () => {
-    console.log('Not implemented')
-  },
-  'pre-publish': () => {
-    console.log('Not implemented')
-  },
-  'post-publish': () => {
-    console.log('Not implemented')
-  },
-  'post-update': () => {
-    console.log('Not implemented')
+  'post-init': (args) => {
+    const packageJson = require(path.join(process.cwd(), 'package.json'))
+    if (packageJson.scripts === undefined) {
+      packageJson.scripts = {}
+    }
+    packageJson.scripts.postpublish = 'gx publish'
+    fs.writeFileSync(path.join(process.cwd(), 'package.json'), JSON.stringify(packageJson, null, 2))
   },
   'post-install': (args) => {
     const path_for_package = args[2]
@@ -43,7 +36,5 @@ if (isHook) {
   const hookName = args[1]
   if (cmds[hookName] !== undefined) {
     cmds[hookName](args)
-  } else {
-    console.log('Hook not supported')
   }
 }
