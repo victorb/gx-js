@@ -9,6 +9,18 @@ JavaScript version of https://github.com/whyrusleeping/gx-go
 Instead of fetching modules to a third-party, you can actually really simple host your
 own modules or ask other nodes to help rehost your modules.
 
+Fetching the modules from IPFS rather than a centralized registry brings many
+benefits to the ecosystem.
+
+- Low cost hosting
+- Easy replication and easy to setup private mirrors
+- Everyone can host packages
+- Caching can happen locally, in the local network or in a private network,
+  because of the P2P nature of IPFS.
+
+For more information about GX itself, please check out the readme in https://github.com/whyrusleeping/gx
+
+
 ## Requirements
 
 * NodeJS (5.11.1 or later)

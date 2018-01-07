@@ -1,7 +1,9 @@
 #! /usr/bin/env node
 const path = require('path')
-var fs = require('fs-extra')
+const fs = require('fs-extra')
+
 const cmds = {
+  // Hook for after the initialization of a package
   'post-init': (args) => {
     const packageJson = require(path.join(process.cwd(), 'package.json'))
     if (packageJson.scripts === undefined) {
@@ -10,10 +12,11 @@ const cmds = {
     packageJson.scripts.postpublish = 'gx publish'
     fs.writeFileSync(path.join(process.cwd(), 'package.json'), JSON.stringify(packageJson, null, 2))
   },
+  // Hook for after installing a package
   'post-install': (args) => {
-    const path_for_package = args[2]
+    const pathForPackage = args[2]
     var items = []
-    fs.walk(path_for_package)
+    fs.walk(pathForPackage)
       .on('data', function (item) {
         items.push(item.path)
       })
@@ -25,6 +28,7 @@ const cmds = {
         fs.ensureSymlinkSync(src, dest)
       })
   },
+  // Prints the path where to install modules
   'install-path': () => {
     console.log('node_modules')
   }
@@ -36,5 +40,12 @@ if (isHook) {
   const hookName = args[1]
   if (cmds[hookName] !== undefined) {
     cmds[hookName](args)
+  } else {
+    console.log(`Could not find hook ${hookName}`)
   }
+} else {
+  console.log('No command specified')
+  Object.keys(cmds).forEach((key) => {
+    console.log('-', key)
+  })
 }
